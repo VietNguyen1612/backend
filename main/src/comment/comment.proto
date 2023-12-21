@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package comment;
+
+service CommentService {
+    rpc getAllCommentById (GetAllCommentByIdRequest) returns (GetAllCommentByIdResponse);
+    rpc addCommentToPost (AddCommentToPostRequest) returns (AddCommentToPostResponse);
+}
+
+// 
+message GetAllCommentByIdRequest {
+    string postId = 1;
+}
+message Comment {
+    string postId = 1;
+    string authorId = 2;
+    string content = 3;
+}
+message GetAllCommentByIdResponse {
+    repeated Comment data = 1;
+}
+
+//
+message AddCommentToPostRequest {
+    string postId = 1;
+    string authorId = 2;
+    string content = 3;
+}
+message AddCommentToPostResponse {
+    Comment data = 1;
+}
+

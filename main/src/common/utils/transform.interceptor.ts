@@ -1,0 +1,31 @@
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { ExceptionLoggerFilter } from './exception-logger.filter';
+
+export interface Response<T> {
+  data: T;
+}
+
+@Injectable()
+export class TransformInterceptor<T>
+  implements NestInterceptor<T, Response<T>>
+{
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler<T>,
+  ): Observable<Response<T>> | Promise<Observable<Response<T>>> {
+    return next.handle().pipe(
+      map((data) => ({
+        data,
+        statusCode: 200,
+        message: `Successfully`,
+      })),
+      catchError(() => throwError(() => new ExceptionLoggerFilter())),
+    );
+  }
+}

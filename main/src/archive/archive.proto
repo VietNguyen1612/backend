@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package proto;
+
+service ArchiveService {
+    rpc createArchive (CreateArchiveRequest) returns (CreateArchiveResponse);
+    rpc addPlaceToArchive (AddPlaceToArchiveRequest) returns (AddPlaceToArchiveResponse);
+    rpc getArchiveById (GetArchiveByIdRequest) returns (GetArchiveByIdResponse);
+    rpc getAllArchiveByUserId (GetAllArchiveByUserIdRequest) returns (GetAllArchiveByUserIdResponse);
+    rpc deletePlaceFromArchive (DeletePlaceFromArchiveRequest) returns (DeletePlaceFromArchiveResponse);
+}
+
+message Place {
+    string _id = 1;
+    string name = 2;
+    string placeId = 3;
+    string phone = 4;
+    string website = 5;
+    map<string, string> operating_hours = 6;
+    string thumbnail = 7;
+    repeated string images = 8;
+    double latitude = 9;
+    double longitude = 10;
+    double latitudeDelta = 11;
+    double longitudeDelta = 12;
+    double rating = 13;
+    string category = 14;
+    int32 reviews = 15;
+    int32 viewCount = 16;
+    map<string, bool> service_options = 17;
+    string province = 18;
+    string city = 19;
+  } 
+
+message Archive {
+    string _id = 1;
+    string authorId = 2;
+    string title = 3;
+    repeated Place places = 4;
+    int32 placesNumber = 5;
+}
+
+message ArchiveDetail {
+    string _id = 1;
+    string authorId = 2;
+    string title = 3;
+    repeated Place places = 4;
+    int32 placesNumber = 5;
+}
+
+
+message CreateArchiveRequest {
+    string authorId = 1;
+    string title = 2;
+    repeated string places = 3;
+}
+
+message CreateArchiveResponse {
+    Archive data = 1;
+}
+
+message AddPlaceToArchiveRequest{
+    string placeId = 1;
+    string archiveId = 2;
+}
+
+message AddPlaceToArchiveResponse {
+    string message = 1;
+}
+
+message GetArchiveByIdRequest {
+    string archiveId = 1;
+}
+
+message GetArchiveByIdResponse {
+    Archive data = 1;
+}
+
+message GetAllArchiveByUserIdRequest {
+    string userId = 1;
+}
+
+message GetAllArchiveByUserIdResponse {
+    repeated Archive data = 1;
+}
+
+// 
+
+message GetPlaceByPlaceIdRequest {
+    string placeId = 1;
+}
+
+message GetPlaceByPlaceIdResponse {
+    ArchiveDetail data = 1;
+}
+
+message DeletePlaceFromArchiveRequest {
+    string placeId = 1;
+    string archiveId = 2;
+}
+
+message DeletePlaceFromArchiveResponse {
+    string message = 1;
+}

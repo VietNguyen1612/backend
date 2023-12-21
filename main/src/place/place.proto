@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package proto;
+
+service PlaceService {
+    rpc getPlaceByPlaceId (GetPlaceByPlaceIdRequest) returns (GetPlaceByPlaceIdResponse);
+    rpc getAllPlaces (GetAllPlacesRequest) returns (GetAllPlacesResponse);
+}
+// place message 
+
+message Place {
+    string _id = 1;
+    string name = 2;
+    string placeId = 3;
+    string phone = 4;
+    string website = 5;
+    map<string, string> operating_hours = 6;
+    string thumbnail = 7;
+    repeated string images = 8;
+    double latitude = 9;
+    double longitude = 10;
+    double latitudeDelta = 11;
+    double longitudeDelta = 12;
+    double rating = 13;
+    string category = 14;
+    int32 reviews = 15;
+    int32 viewCount = 16;
+    map<string, bool> service_options = 17;
+    string province = 18;
+    string city = 19;
+} 
+
+message GetPlaceByPlaceIdRequest {
+    string placeId = 1;
+}
+
+message GetPlaceByPlaceIdResponse {
+    Place data = 1;
+}
+
+message GetAllPlacesRequest {
+    int32 pageSize = 1;
+    string lastId = 2;
+}
+
+message GetAllPlacesResponse {
+    repeated Place data = 1;
+    string lastId = 2;
+}
